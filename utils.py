@@ -164,7 +164,15 @@ def generate_string(model, tokenizer, device, input_text, template):
                           pad_token_id=tokenizer.pad_token_id,
                           eos_token_id=tokenizer.eos_token_id)
     output_str = tokenizer.decode(output[0], skip_special_tokens=True)
-    return output_str
+    
+    # Find the end of the template in the output string
+    end_of_template_string = "===Labels to apply===\n"
+    end_of_template_index = output_str.find(end_of_template_string)
+    if end_of_template_index != -1:
+        # Return only the text after the template
+        output_str = output_str[end_of_template_index + len(end_of_template_string):]
+    
+    return output_str.strip()  # strip to remove leading/trailing whitespace
 
 def get_last_folder_alphabetically(directory_path):
     """

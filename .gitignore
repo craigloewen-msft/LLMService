@@ -1,2 +1,3 @@
 model-cache
-gpu-cpu_model
+models
+__pycache__
